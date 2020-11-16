@@ -45,7 +45,10 @@ def get_vid_and_playsafe():
     browser.get("http://uc.xinchengjy.cn/login")
     time.sleep(2)
     username = browser.find_element_by_xpath("//*[@id=\"user-login\"]/div[1]/input")
-    username.send_keys("13527201231")
+    #13723472113
+    #15521178445
+    #13527201231
+    username.send_keys("13723472113")
     password = browser.find_element_by_xpath("//*[@id=\"user-login\"]/div[2]/input")
     password.send_keys("Xm123456")
     
@@ -57,12 +60,13 @@ def get_vid_and_playsafe():
     
     print("请在10秒内完成登录")
     time.sleep(10)
+    #y[04531]微观经济学 y[00799]数量方法
     #y[11465]现代公司管理 y[07484]社会保障学 y[11466]现代企业人力资源管理概论 y[11467]人力资源统计学 y[00463]现代人员测评
     #y[00324]人事管理学 y[11468]工作岗位研究原理与应用 y[00164]劳动经济学 y[06183]工资管理 y[11365]劳动力市场学
     #y[11366]人口与劳动资源 y[05355]商务英语翻译 y[00096]外刊经贸知识选读 y[00090]国际贸易实务（一）
     #y[05844]国际商务英语 y[05439]商务英语阅读 y[05440]商务英语写作 [00795]综合英语（二） y[07564]唐宋词研究
     #y[11342]民间文学概论 y[00814]中国古代文论选读 y[00821]现代汉语语法研究
-    browser.get("http://uc.xinchengjy.cn/topic/course/study/00814")
+    browser.get("http://uc.xinchengjy.cn/topic/course/study/00799")
     
     time.sleep(2)
     #章节
