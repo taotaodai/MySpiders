@@ -45,10 +45,13 @@ def get_vid_and_playsafe():
     browser.get("http://uc.xinchengjy.cn/login")
     time.sleep(2)
     username = browser.find_element_by_xpath("//*[@id=\"user-login\"]/div[1]/input")
-    #13723472113
+    #18825292880 Bg666666
+    #13723472113 Xm123456
     #15521178445
     #13527201231
-    username.send_keys("13723472113")
+    #18680541236
+    #13137726628
+    username.send_keys("13137726628")
     password = browser.find_element_by_xpath("//*[@id=\"user-login\"]/div[2]/input")
     password.send_keys("Xm123456")
     
@@ -60,17 +63,18 @@ def get_vid_and_playsafe():
     
     print("请在10秒内完成登录")
     time.sleep(10)
-    #y[04531]微观经济学 y[00799]数量方法
+    #y[00803]财务管理 [50-00098]国际市场营销学
+    #y[04531]微观经济学 y[00799]数量方法 [04533]管理与成本会计 [00944]审计 [06069]审计学原理
     #y[11465]现代公司管理 y[07484]社会保障学 y[11466]现代企业人力资源管理概论 y[11467]人力资源统计学 y[00463]现代人员测评
     #y[00324]人事管理学 y[11468]工作岗位研究原理与应用 y[00164]劳动经济学 y[06183]工资管理 y[11365]劳动力市场学
     #y[11366]人口与劳动资源 y[05355]商务英语翻译 y[00096]外刊经贸知识选读 y[00090]国际贸易实务（一）
     #y[05844]国际商务英语 y[05439]商务英语阅读 y[05440]商务英语写作 [00795]综合英语（二） y[07564]唐宋词研究
     #y[11342]民间文学概论 y[00814]中国古代文论选读 y[00821]现代汉语语法研究
-    browser.get("http://uc.xinchengjy.cn/topic/course/study/00799")
+    browser.get("http://uc.xinchengjy.cn/topic/course/study/50-00098")
     
-    time.sleep(2)
+    time.sleep(3)
     #章节
-    parent = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul")
+    parent = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[2]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul")
     has_next_section = True
     current_section_index = 1
     total = 0
@@ -86,7 +90,7 @@ def get_vid_and_playsafe():
                 # parent_2 = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]/ul")
                 # parent_2.click()
                 
-            section = parent.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]")
+            section = parent.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[2]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]")
             has_next_jie = True
             current_jie_index = 2
 
@@ -99,7 +103,7 @@ def get_vid_and_playsafe():
             current_video_index = 2
             #//*[@id="app"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li[5]/ul/li[2]/p/a
             try:
-                jie = parent.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]/ul/li["+str(current_jie_index)+"]/p/a")               
+                jie = parent.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[2]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]/ul/li["+str(current_jie_index)+"]/p/a")               
                 jie_name = jie.get_attribute("title")
                 if(jie_name.find("内容略") >= 0):
                     #换下一节
@@ -107,10 +111,10 @@ def get_vid_and_playsafe():
                     continue
             except Exception as e:
                 print("")
-            while(has_next_video):                
+            while(has_next_video):
                 try:
                     print("获取第"+str(current_section_index)+"章，第"+str(current_jie_index-1)+"节，第"+str(current_video_index-1)+"课")
-                    video = video_parent.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]/ul/li["+str(current_jie_index)+"]/ul/li["+str(current_video_index)+"]/p/a[1]")
+                    video = video_parent.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[2]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]/ul/li["+str(current_jie_index)+"]/ul/li["+str(current_video_index)+"]/p/a[1]")
                     video_name = "{0}.{1}.{2}-{3}".format(current_section_index,current_jie_index-1,current_video_index-1,video.get_attribute("title"))
                     fetch(proxy, video,video_name)                         #//*[@id="app"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li[1]/ul/li[2]/ul/li[2]/p/a[1]
                                                                 #//*[@id="app"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li[2]/ul/li[2]/ul/li[3]/p/a[1]
