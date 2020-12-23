@@ -46,9 +46,9 @@ def get_vid_and_playsafe():
     time.sleep(2)
     username = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[1]/div/input")
 
-    username.send_keys("账号")
+    username.send_keys("17754494531")
     password = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[2]/div/input")
-    password.send_keys("密码")
+    password.send_keys("Xm123456")
     
     #设置cookie自动登录，但是在这个网站无效
     # browser.add_cookie({
@@ -58,7 +58,9 @@ def get_vid_and_playsafe():
     
     print("请在10秒内完成登录")
     time.sleep(10)
-    #y[00884]学前教育行政与管理 y[00885]学前教育与诊断 [42-08118]法律基础
+    #y[42-07817]电子政务
+    #y[09235]设计原理 y[42-07138]工程造价与管理 y[42-04627]工程管理概论 y[42-06086]工程监理 y[42-06936]建筑法规
+    #y[00884]学前教育行政与管理 y[00885]学前教育与诊断 y[42-08118]法律基础 y[00810]人力资源管理（二）
     #y[00803]财务管理 y[50-00098]国际市场营销学 y[03703]国际会计与审计准则 y[03293]现代谈判学 y[03294]公共关系案例
     #y[04531]微观经济学 y[00799]数量方法 [04533]管理与成本会计 [00944]审计 [06069]审计学原理
     #y[11465]现代公司管理 y[07484]社会保障学 y[11466]现代企业人力资源管理概论 y[11467]人力资源统计学 y[00463]现代人员测评
@@ -66,7 +68,7 @@ def get_vid_and_playsafe():
     #y[11366]人口与劳动资源 y[05355]商务英语翻译 y[00096]外刊经贸知识选读 y[00090]国际贸易实务（一）
     #y[05844]国际商务英语 y[05439]商务英语阅读 y[05440]商务英语写作 [00795]综合英语（二） y[07564]唐宋词研究
     #y[11342]民间文学概论 y[00814]中国古代文论选读 y[00821]现代汉语语法研究
-    browser.get("http://uc.xinchengjy.cn/topic/course/study/42-08118")
+    browser.get("http://uc.xinchengjy.cn/topic/course/study/42-07817")
     
     time.sleep(3)
     #章节                                      //*[@id="app"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul
