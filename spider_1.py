@@ -46,7 +46,7 @@ def get_vid_and_playsafe():
     time.sleep(2)
     username = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[1]/div/input")
 
-    username.send_keys("17754494531")
+    username.send_keys("15810905215")
     password = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[2]/div/input")
     password.send_keys("Xm123456")
     
@@ -58,7 +58,10 @@ def get_vid_and_playsafe():
     
     print("请在10秒内完成登录")
     time.sleep(10)
-    #y[42-07817]电子政务
+    #y[42-07250]投资学原理 [00227]公司法 y[37-05066]项目论证与评估 [37-05062]项目质量管理 [42-06396]国际工程承包与管理
+    #y[35-12339]幼儿园教育基础 y[12340]学前儿童发展 y[35-12344]学前教育政策与法规 y[35-30001]学前儿童保育学 y[42-00874]特殊儿童早期干预
+    #y[05759]健康教育与健康促进 [34-05963]绩效管理 [34-06090]人员素质测评理论与方法 [33-00923]行政法与行政诉讼法（一）
+    #y[42-07817]电子政务 y[11-81761]人力资源管理高级实验 [50-00071]社会保障概论 [43-06093]人力资源开发与管理
     #y[09235]设计原理 y[42-07138]工程造价与管理 y[42-04627]工程管理概论 y[42-06086]工程监理 y[42-06936]建筑法规
     #y[00884]学前教育行政与管理 y[00885]学前教育与诊断 y[42-08118]法律基础 y[00810]人力资源管理（二）
     #y[00803]财务管理 y[50-00098]国际市场营销学 y[03703]国际会计与审计准则 y[03293]现代谈判学 y[03294]公共关系案例
@@ -68,7 +71,7 @@ def get_vid_and_playsafe():
     #y[11366]人口与劳动资源 y[05355]商务英语翻译 y[00096]外刊经贸知识选读 y[00090]国际贸易实务（一）
     #y[05844]国际商务英语 y[05439]商务英语阅读 y[05440]商务英语写作 [00795]综合英语（二） y[07564]唐宋词研究
     #y[11342]民间文学概论 y[00814]中国古代文论选读 y[00821]现代汉语语法研究
-    browser.get("http://uc.xinchengjy.cn/topic/course/study/42-07817")
+    browser.get("http://uc.xinchengjy.cn/topic/course/study/42-06396")
     
     time.sleep(3)
     #章节                                      //*[@id="app"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul
