@@ -46,9 +46,9 @@ def get_vid_and_playsafe():
     time.sleep(2)
     username = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[1]/div/input")
 
-    username.send_keys("15216760052")
+    username.send_keys("13318275453")
     password = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[2]/div/input")
-    password.send_keys("jinxiche")
+    password.send_keys("Xm123456")
     
     #设置cookie自动登录，但是在这个网站无效
     # browser.add_cookie({
@@ -58,8 +58,10 @@ def get_vid_and_playsafe():
     
     print("请在10秒内完成登录")
     time.sleep(10)
-    #y[51-06088]管理思想史 y[03702]会计制度设计与比较 y[00445]中外教育管理史
-    #y[42-00806]财务报表分析(二) y[42-00207]高级财务管理 y[42-03364]供应链物流学 [00469]教育学原理
+    #y[03201]护理学导论 y[34-06230]小学艺术课程与教学 y[00809]市场营销（二）y[00796]商务英语
+    #y[42-05151]劳动与社会保障 y[43-11530]护理礼仪与人际沟通 y[00464]中外教育简史 y[00458]中小学教育管理 y[03298]创新思维理论与方法
+    #y[51-06088]管理思想史 y[03702]会计制度设计与比较 y[00445]中外教育管理史 y[02864]微生物学与免疫学基础
+    #y[42-00806]财务报表分析(二) y[42-00207]高级财务管理 y[42-03364]供应链物流学 y[00469]教育学原理
     #y[00108]工商行政管理学概论 y[00264]中国法律思想史 y[06087]工程项目管理 y[11-00820]汉字学概论
     #y[42-07250]投资学原理 [00227]公司法 y[37-05066]项目论证与评估 y[37-05062]项目质量管理 y[42-06396]国际工程承包与管理
     #y[35-12339]幼儿园教育基础 y[12340]学前儿童发展 y[35-12344]学前教育政策与法规 y[35-30001]学前儿童保育学 y[42-00874]特殊儿童早期干预
@@ -74,13 +76,13 @@ def get_vid_and_playsafe():
     #y[11366]人口与劳动资源 y[05355]商务英语翻译 y[00096]外刊经贸知识选读 y[00090]国际贸易实务（一）
     #y[05844]国际商务英语 y[05439]商务英语阅读 y[05440]商务英语写作 [00795]综合英语（二） y[07564]唐宋词研究
     #y[11342]民间文学概论 y[00814]中国古代文论选读 y[00821]现代汉语语法研究
-    browser.get("http://uc.xinchengjy.cn/topic/course/study/51-02111")
+    browser.get("http://uc.xinchengjy.cn/topic/course/study/00796")
     
     time.sleep(3)
     #章节                                      //*[@id="app"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul
     parent = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul")
     has_next_section = True
-    current_section_index = 1
+    current_section_index = 4
     total = 0
     while(has_next_section):
         try:
@@ -121,6 +123,15 @@ def get_vid_and_playsafe():
                     video = video_parent.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]/ul/li["+str(current_jie_index)+"]/ul/li["+str(current_video_index)+"]/p/a[1]")
                     video_name = "{0}.{1}.{2}-{3}".format(current_section_index,current_jie_index-1,current_video_index-1,video.get_attribute("title"))
                     video_name = video_name.replace("\n", "")
+                    video_name = video_name.replace(":", "：")
+                    video_name = video_name.replace("?", "？")
+                    video_name = video_name.replace("/", "、")
+                    video_name = video_name.replace("\\", "、")
+                    video_name = video_name.replace("<", "《")
+                    video_name = video_name.replace(">", "》")
+                    video_name = video_name.replace("*", "&")
+                    
+                    video_name = video_name
                     fetch(proxy, video,video_name)                         #//*[@id="app"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li[1]/ul/li[2]/ul/li[2]/p/a[1]
                                                                 #//*[@id="app"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li[2]/ul/li[2]/ul/li[3]/p/a[1]
                                                                 #//*[@id="app"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li[1]/ul/li[2]/ul/li[2]/p/a[1]
