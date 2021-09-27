@@ -23,6 +23,7 @@ pad_txt = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS)
 unpad = lambda s : s[0:-s[-1]]
  
 def urlget(_url, _header = {}) :
+    # print('_url',_url)
     _response = requests.get(_url, headers = _header)
     return _response.content.decode('utf-8')
  
@@ -79,12 +80,18 @@ def vidinfo(_vid) :
     return {"m3u8": _info["hls"][-1], "seed_const": _info["seed_const"]}
  
 def get_key(vid, playsafe,video_name) :
+    # print('vid',vid)
+    # print('playsafe',playsafe)
+    # print('video_name',video_name)
     vinfo = vidinfo(vid)
     if not vinfo :
         print("get vid(%s) information error" %(vid))
         return 0
-     
+    print('vinfo：',vinfo)
+    
     m3u8content = urlget(vinfo["m3u8"])
+    # m3u8content = urlget('http://hls.videocc.net/b034527feb/a/b034527feb17d30f7d2f39a0c271afda_2.m3u8?pid=1629250393197X1732338&device=desktop')
+    
     if not m3u8content :
         print("get m3u8(%s) error" %(vinfo["m3u8"]))
         return 0
@@ -95,7 +102,7 @@ def get_key(vid, playsafe,video_name) :
         return 0
      
     m3u8keyurl = rem.group(1).strip() + "?token=" + playsafe
-    # print(m3u8keyurl)
+    # print('m3u8keyurl',m3u8keyurl)
     m3u8keyurl = re.sub(r'://([^/]+)/', r'://\1/playsafe/', m3u8keyurl, 1, re.I)
     # print(m3u8keyurl)
      
@@ -127,4 +134,5 @@ def get_key(vid, playsafe,video_name) :
         f.write(m3u8content.encode('utf-8'))
      
     return 1
- 
+
+# get_key('b034527feb17d30f7d2f39a0c271afda_b', '2d0997af-c857-48db-a2f6-35ce6553ae3a-t126', '7.2.1-人格的测验')

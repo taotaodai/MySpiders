@@ -40,15 +40,15 @@ def get_m3u8_file():
     time.sleep(1)
     
     username = browser.find_element_by_xpath("//*[@id=\"username\"]")
-    username.send_keys("17820020047")
+    username.send_keys("17818555103")
     password = browser.find_element_by_xpath("//*[@id=\"password\"]")
-    password.send_keys("abcd123520")
+    password.send_keys("Abcd123520")
     
     login_3 = browser.find_element_by_xpath("//*[@id=\"submit_log_btn\"]")
     login_3.click()
     time.sleep(5)
     
-    url = "http://elearning.zikao365.com/xcware/video/h5video/videoPlay.shtm?cwareID=513913&videoID="
+    url = "http://elearning.zikao365.com/xcware/video/h5video/videoPlay.shtm?cwareID=514286&videoID="
     browser.get(url+"101")
         
     #章节                                      //*[@id="app"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul

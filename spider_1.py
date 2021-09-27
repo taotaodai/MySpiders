@@ -14,10 +14,14 @@ from selenium.webdriver.chrome.options import Options
 #代理抓包库
 from browsermobproxy import Server
 import polyv_m3u8
-  
-# BASE_URL = "http://uc.xinchengjy.cn/"
-BASE_URL = "http://kc.zikao35.com/"
-def get_vid_and_playsafe():
+
+#http://yzkjh.beegoedu.com/
+BASE_URL = "http://uc.xinchengjy.cn/"
+# BASE_URL = "http://kc.zikao35.com/"
+
+server = None
+browser = None
+def start(userName,passWord,courseCode,url = BASE_URL,zhang = 1,jie = 2,hintCallback = None):
     server = Server(r'D:\browsermob-proxy-2.1.4\bin\browsermob-proxy.bat')
     server.start()
     proxy = server.create_proxy()
@@ -38,16 +42,15 @@ def get_vid_and_playsafe():
     
     browser = webdriver.Chrome(chrome_options=chrome_options)
     
-    login_url = BASE_URL + "login"
+    login_url = url + "login"
     browser.get(login_url)
     time.sleep(2)
     username = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[1]/div/input")
 
-    username.send_keys("13326974963")
+    username.send_keys(userName)
     password = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[2]/div/input")
-    #Xm123456
-    #Zg123456
-    password.send_keys("Zg123456")
+    
+    password.send_keys(passWord)
     
     #设置cookie自动登录，但是在这个网站无效
     # browser.add_cookie({
@@ -55,46 +58,32 @@ def get_vid_and_playsafe():
     #     'value': 'eG0xMzUyNzIwMTIzMQ%3D%3D'
     # })
     
-    print("请在10秒内完成登录")
-    time.sleep(20)
-    #y「06936」建筑法规 y「08263」工程经济学与项目融资 y「51-00442」教育学（二）
-    #y[50-04762]金融学概论 y[01282]外国教育史 y「06393」土木工程概论 y「06962」工程造价确定与控制 y「06289」工程招标与合同管理
-    #y[35-00542]文学概论（二） y[35-03330]小学数学教学研究 y[35-06230]小学艺术教育 y[35-03329」小学语文教学研究
-    #y[32-28041]现代科学技术概论 y[32-28054]数学基础 y[11-00142]计量经济学 y[50-03305]城市规划原理 [03300]现代媒体总论
-    #y[13-06091]薪酬管理 y[32-28052]儿童发展 y[13-03130]现代科学技术基础 y[32-28042]中外文学精读 y[42-03348]市场调查
-    #y[13-06092]工作分析 y[03303]建筑力学与结构 y[03823]建筑制图 y[04037]施工技术与组织 y[08262]房地产开发与经营
-    #y[03203]外科护理学（二） y[03011]儿科护理学（二） y[03297]企业文化 [34-04579]中学语文教学法 y[13-08118]法律基础
-    #y[03201]护理学导论 y[34-06230]小学艺术课程与教学 y[00809]市场营销（二）y[00796]商务英语 y[05767]食品加工与保藏
-    #y[42-05151]劳动与社会保障 y[43-11530]护理礼仪与人际沟通 y[00464]中外教育简史 y[00458]中小学教育管理 y[03298]创新思维理论与方法
-    #y[51-06088]管理思想史 y[03702]会计制度设计与比较 y[00445]中外教育管理史 y[02864]微生物学与免疫学基础
-    #y[42-00806]财务报表分析(二) y[42-00207]高级财务管理 y[42-03364]供应链物流学 y[00469]教育学原理
-    #y[00108]工商行政管理学概论 y[00264]中国法律思想史 y[06087]工程项目管理 y[11-00820]汉字学概论
-    #y[42-07250]投资学原理 [00227]公司法 y[37-05066]项目论证与评估 y[37-05062]项目质量管理 y[42-06396]国际工程承包与管理
-    #y[35-12339]幼儿园教育基础 y[12340]学前儿童发展 y[35-12344]学前教育政策与法规 y[35-30001]学前儿童保育学 y[42-00874]特殊儿童早期干预
-    #y[05759]健康教育与健康促进 [34-05963]绩效管理 [34-06090]人员素质测评理论与方法 [33-00923]行政法与行政诉讼法（一）
-    #y[42-07817]电子政务 y[11-81761]人力资源管理高级实验 [50-00071]社会保障概论 [43-06093]人力资源开发与管理
-    #y[09235]设计原理 y[42-07138]工程造价与管理 y[42-04627]工程管理概论 y[42-06086]工程监理 y[42-06936]建筑法规
-    #y[00884]学前教育行政与管理 y[00885]学前教育与诊断 y[42-08118]法律基础 y[00810]人力资源管理（二）
-    #y[00803]财务管理 y[50-00098]国际市场营销学 y[03703]国际会计与审计准则 y[03293]现代谈判学 y[03294]公共关系案例
-    #y[04531]微观经济学 y[00799]数量方法 [04533]管理与成本会计 [00944]审计 [06069]审计学原理
-    #y[11465]现代公司管理 y[07484]社会保障学 y[11466]现代企业人力资源管理概论 y[11467]人力资源统计学 y[00463]现代人员测评
-    #y[00324]人事管理学 y[11468]工作岗位研究原理与应用 y[00164]劳动经济学 y[06183]工资管理 y[11365]劳动力市场学
-    #y[11366]人口与劳动资源 y[05355]商务英语翻译 y[00096]外刊经贸知识选读 y[00090]国际贸易实务（一）
-    #y[05844]国际商务英语 y[05439]商务英语阅读 y[05440]商务英语写作 [00795]综合英语（二） y[07564]唐宋词研究
-    #y[11342]民间文学概论 y[00814]中国古代文论选读 y[00821]现代汉语语法研究
-    browser.get(BASE_URL + "topic/course/study/51-00442")
+    wait_time = 15
+    hint_login = "请在"+str(wait_time)+"秒内完成登录"
+    print(hint_login)
+    if hintCallback:
+        hintCallback(hint_login)
+    time.sleep(wait_time)
+    #y「51-02139」计算机信息检索 y「51-02134」信息系统设计与分析 y「51-02136」Windows及应用 y「51-02129」信息资源建设
+    #y「51-02133」信息政策与法规 y「51-02140」信息咨询 y「04741」计算机网络原理 y「04735」数据库系统原理 y「02323」操作系统概论
+    #y「00537」中国现代文学史 y「51-02867」卫生统计学 y「51-04489」室内装饰材料 y「51-06918」工程图学基础 y「50-00185」商品流通概论
+    #「00186」国际商务谈判
+    browser.get(url + "topic/course/study/" + courseCode)
     
-    time.sleep(3)
+    time.sleep(5)
     #章节                                      //*[@id="app"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul
     parent = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul")
     has_next_section = True
-    current_section_index = 1
+    current_section_index = zhang
     total = 0
     while(has_next_section):
         try:
             #第一章是默认展开的，之后的需要点击展开才能使内部的组件可被使用
             if(current_section_index > 1):
-                print("点击第"+str(current_section_index)+"章")
+                hint_zhang = "请点击第"+str(current_section_index)+"章"
+                print(hint_zhang)
+                if hintCallback:
+                    hintCallback(hint_zhang)
                 time.sleep(10)
                 # parent.click()
                 
@@ -121,11 +110,14 @@ def get_vid_and_playsafe():
                     #换下一节
                     current_jie_index += 1
                     continue
-            except Exception as e:
+            except Exception:
                 print("")
             while(has_next_video):
                 try:
-                    print("获取第"+str(current_section_index)+"章，第"+str(current_jie_index-1)+"节，第"+str(current_video_index-1)+"课")
+                    hint_ke = "获取第"+str(current_section_index)+"章，第"+str(current_jie_index-1)+"节，第"+str(current_video_index-1)+"课"
+                    print(hint_ke)
+                    if hintCallback:
+                        hintCallback(hint_ke)
                     video = video_parent.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]/ul/li["+str(current_jie_index)+"]/ul/li["+str(current_video_index)+"]/p/a[1]")
                     video_name = "{0}.{1}.{2}-{3}".format(current_section_index,current_jie_index-1,current_video_index-1,video.get_attribute("title"))
                     video_name = video_name.replace("\n", "")
@@ -161,12 +153,20 @@ def get_vid_and_playsafe():
                     has_next_video = False                    
                     # total -= 1
         # break
-                
-    print("下载完成，视频数量："+str(total))
+    hint_finish = "下载完成，视频数量："+str(total)
+    print(hint_finish)
+    if hintCallback:
+        hintCallback(hint_finish)
     time.sleep(5)
     server.stop()
     browser.quit()
-    
+
+def cancel():
+    if server:
+        server.close()
+    if browser:
+        browser.quit()
+        
 def fetch(proxy,element,video_name):
     element.click()
     time.sleep(2)
@@ -224,9 +224,6 @@ def download(url):
         for index, line in enumerate(file_line):
             if "#EXT-X-KEY" in line:  # 找解密Key
                 
-                uri_pos = line.find("URI")
-                quotation_mark_pos = line.rfind('"')
-                key_path = line[uri_pos:quotation_mark_pos].split('"')[1]
                 
                 iv_pos = line.find("IV")
                 iv = line[iv_pos+3:]
@@ -261,7 +258,9 @@ def hash_md5(_str) :
     _hash.update(_str.encode('utf-8'))
     return _hash.hexdigest()
 
-get_vid_and_playsafe()
+#「00018」计算机应用基础 「02324」离散数学 「31-00197」旅游资源规划与开发 「31-00198」旅游企业投资与管理 「31-00199」中外民俗 
+#「51-01850」建筑施工技术
+# start("17820020047","Zk123456","51-01850",url= "http://yzkjh.beegoedu.com/",zhang=1)
 
 
 # path = "E:\wangtao\PythonWorkSpace\MySpiders\m3u8File\[34-04579]中学语文教学法\\"
