@@ -2,11 +2,9 @@
 
 '用于爬取http://uc.xinchengjy.cn/ 上的网课。'
 '这个文件的功能主要是，获取vid和playsafe，再由polyv_m3u8解密，生成m3u8文件，用于下载视频片段。'
-import os
-import time
-import requests
+import os,time,requests,hashlib
 from Cryptodome.Cipher import AES
-import hashlib
+from pathlib import Path
 
 #自动化测试库
 from selenium import webdriver
@@ -15,14 +13,14 @@ from selenium.webdriver.chrome.options import Options
 from browsermobproxy import Server
 import polyv_m3u8
 
-#http://yzkjh.beegoedu.com/
+#http://wx.zikaojihui.com/
 BASE_URL = "http://uc.xinchengjy.cn/"
 # BASE_URL = "http://kc.zikao35.com/"
 
 server = None
 browser = None
 def start(userName,passWord,courseCode,url = BASE_URL,zhang = 1,jie = 2,hintCallback = None):
-    server = Server(r'D:\browsermob-proxy-2.1.4\bin\browsermob-proxy.bat')
+    server = Server(r'browsermob-proxy-2.1.4\bin\browsermob-proxy.bat')
     server.start()
     proxy = server.create_proxy()
     
@@ -39,43 +37,32 @@ def start(userName,passWord,courseCode,url = BASE_URL,zhang = 1,jie = 2,hintCall
     # }
 
     # chrome_options.add_experimental_option('prefs',prefs)
-    
+    global browser
     browser = webdriver.Chrome(chrome_options=chrome_options)
     
-    login_url = url + "login"
-    browser.get(login_url)
-    time.sleep(2)
-    username = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[1]/div/input")
+    parent_base_xpath = ""
+    path = ""
+    if userName:
+        login(url,userName,passWord,hintCallback)
+        path = "topic/course/study/"
+        parent_base_xpath = "//*[@id=\"app\"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul"
+    else:
+        path = "topic/major/"
+        parent_base_xpath = "//*[@id=\"app\"]/div/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul"
 
-    username.send_keys(userName)
-    password = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[2]/div/input")
+    browser.get(url + path + courseCode)
     
-    password.send_keys(passWord)
-    
-    #设置cookie自动登录，但是在这个网站无效
-    # browser.add_cookie({
-    #     'name': 'coksinfo',
-    #     'value': 'eG0xMzUyNzIwMTIzMQ%3D%3D'
-    # })
-    
-    wait_time = 15
-    hint_login = "请在"+str(wait_time)+"秒内完成登录"
-    print(hint_login)
-    if hintCallback:
-        hintCallback(hint_login)
-    time.sleep(wait_time)
-    #y「51-02139」计算机信息检索 y「51-02134」信息系统设计与分析 y「51-02136」Windows及应用 y「51-02129」信息资源建设
-    #y「51-02133」信息政策与法规 y「51-02140」信息咨询 y「04741」计算机网络原理 y「04735」数据库系统原理 y「02323」操作系统概论
-    #y「00537」中国现代文学史 y「51-02867」卫生统计学 y「51-04489」室内装饰材料 y「51-06918」工程图学基础 y「50-00185」商品流通概论
-    #「00186」国际商务谈判
-    browser.get(url + "topic/course/study/" + courseCode)
-    
-    time.sleep(5)
+    time.sleep(10)
     #章节                                      //*[@id="app"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul
-    parent = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul")
+    parent = browser.find_element_by_xpath(parent_base_xpath)
     has_next_section = True
     current_section_index = zhang
     total = 0
+    
+    m3u8dir = Path("m3u8File")
+    if not m3u8dir.exists():
+        os.makedirs(m3u8dir)
+    
     while(has_next_section):
         try:
             #第一章是默认展开的，之后的需要点击展开才能使内部的组件可被使用
@@ -90,8 +77,8 @@ def start(userName,passWord,courseCode,url = BASE_URL,zhang = 1,jie = 2,hintCall
                 #但是这里点击失败了，第二级不会展开。只能手动点击
                 # parent_2 = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]/ul")
                 # parent_2.click()
-                
-            section = parent.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]")
+            
+            section = parent.find_element_by_xpath(parent_base_xpath + "/li["+str(current_section_index)+"]")
             has_next_jie = True
             current_jie_index = 2
 
@@ -104,7 +91,7 @@ def start(userName,passWord,courseCode,url = BASE_URL,zhang = 1,jie = 2,hintCall
             current_video_index = 2
             #//*[@id="app"]/div/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div/div/div[1]/div/ul/li[5]/ul/li[2]/p/a
             try:
-                jie = parent.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]/ul/li["+str(current_jie_index)+"]/p/a")               
+                jie = parent.find_element_by_xpath(parent_base_xpath + "/li["+str(current_section_index)+"]/ul/li["+str(current_jie_index)+"]/p/a")               
                 jie_name = jie.get_attribute("title")
                 if(jie_name.find("内容略") >= 0):
                     #换下一节
@@ -118,7 +105,7 @@ def start(userName,passWord,courseCode,url = BASE_URL,zhang = 1,jie = 2,hintCall
                     print(hint_ke)
                     if hintCallback:
                         hintCallback(hint_ke)
-                    video = video_parent.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul/li["+str(current_section_index)+"]/ul/li["+str(current_jie_index)+"]/ul/li["+str(current_video_index)+"]/p/a[1]")
+                    video = video_parent.find_element_by_xpath(parent_base_xpath + "/li["+str(current_section_index)+"]/ul/li["+str(current_jie_index)+"]/ul/li["+str(current_video_index)+"]/p/a[1]")
                     video_name = "{0}.{1}.{2}-{3}".format(current_section_index,current_jie_index-1,current_video_index-1,video.get_attribute("title"))
                     video_name = video_name.replace("\n", "")
                     video_name = video_name.replace("\r", "")
@@ -160,6 +147,24 @@ def start(userName,passWord,courseCode,url = BASE_URL,zhang = 1,jie = 2,hintCall
     time.sleep(5)
     server.stop()
     browser.quit()
+    
+def login(url,userName,passWord,hintCallback):
+    login_url = url + "login"
+    browser.get(login_url)
+    time.sleep(2)
+    username = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[1]/div/input")
+
+    username.send_keys(userName)
+    password = browser.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div[2]/form/div[2]/div/input")
+    
+    password.send_keys(passWord)
+    
+    wait_time = 15
+    hint_login = "请在"+str(wait_time)+"秒内完成登录"
+    print(hint_login)
+    if hintCallback:
+        hintCallback(hint_login)
+    time.sleep(wait_time)
 
 def cancel():
     if server:
@@ -258,11 +263,6 @@ def hash_md5(_str) :
     _hash.update(_str.encode('utf-8'))
     return _hash.hexdigest()
 
-#「00018」计算机应用基础 「02324」离散数学 「31-00197」旅游资源规划与开发 「31-00198」旅游企业投资与管理 「31-00199」中外民俗 
-#「51-01850」建筑施工技术
-# start("17820020047","Zk123456","51-01850",url= "http://yzkjh.beegoedu.com/",zhang=1)
+#
+# start("17820020047","Zk123456","31-00199",url= "http://wx.zikaojihui.com/",zhang=1)
 
-
-# path = "E:\wangtao\PythonWorkSpace\MySpiders\m3u8File\[34-04579]中学语文教学法\\"
-# download(path + "1.1.1-语言与文化：“背景”与“领域”.m3u8")
-# print("2.3.1- 认知心理学与语文课程".replace(" ", ""))

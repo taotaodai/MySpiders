@@ -6,7 +6,6 @@ Created on Thu Sep  9 17:48:58 2021
 """
 
 import sys
-import time
 from enum import Enum
  
 #这里我们提供必要的引用。基本控件位于pyqt5.qtwidgets模块中。
@@ -22,9 +21,9 @@ H_EDIT = 30
 
 executing = False
 class Website(Enum):
-    XIN_CHENG = {"url":"http://uc.xinchengjy.cn/","password":"Xm123456"}
-    ZIKAO_35 = {"url":"http://kc.zikao35.com/","password":"Zg123456"}
-    ZIKAO_HUI = {"url":"http://yzkjh.beegoedu.com/","password":"Zk123456"}
+    XIN_CHENG = {"url":"http://uc.xinchengjy.cn/","url2":"","password":"Xm123456"}
+    ZIKAO_35 = {"url":"http://kc.zikao35.com/","url2":"","password":"Zg123456"}
+    ZIKAO_HUI = {"url":"http://wx.zikaojihui.com/","url2":"","password":"Zk123456"}
     
 class Example(QWidget):
     def __init__(self):
@@ -34,6 +33,8 @@ class Example(QWidget):
 
     def initUI(self):
         self.combo = QComboBox(self)
+        # self.combo2 = QComboBox(self)
+        
         self.lbHint = QLabel("",self)
         
         lbUsername = QLabel("用户名:", self)
@@ -55,7 +56,7 @@ class Example(QWidget):
             self.combo.addItem(member.value["url"])
 
         self.combo.move(ORIGIN_X, ORIGIN_Y)
-        self.lbHint.setGeometry(220,ORIGIN_Y,150,20)
+        self.lbHint.setGeometry(220,ORIGIN_Y,250,20)
         palette = QPalette()
         palette.setColor(QPalette.WindowText,Qt.red)
         self.lbHint.setPalette(palette)
@@ -80,10 +81,10 @@ class Example(QWidget):
         self.start.move(140,140)
         self.start.clicked[bool].connect(self.onStart)
 
-        self.setGeometry(300, 300, 400, 300)
+        self.setGeometry(300, 300, 500, 300)
         self.setWindowTitle('QComboBox')
         self.show()
-        self.showTestData()
+        # self.showTestData()
 
     def onActivated(self, text):
         print(text)
@@ -102,17 +103,20 @@ class Example(QWidget):
             self.start.setText("开始")
         else:            
             username = self.leUsername.text()
+            password = ""
             if username:    
                 print("用户名",username)
+                password = self.lePassword.text()
+                if password:    
+                    print("密码",password)
+                else:
+                    self.lbHint.setText("请输入密码")
+                    return
             else:
-                self.lbHint.setText("请输入用户名")
-                return
-            password = self.lePassword.text()
-            if password:    
-                print("密码",password)
-            else:
-                self.lbHint.setText("请输入密码")
-                return
+                #这里不判断用户名
+                # self.lbHint.setText("请输入用户名")
+                print("")
+
             courseCode = self.leCode.text()
             if courseCode:
                 print("课程编号",courseCode)

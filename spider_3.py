@@ -48,7 +48,7 @@ def get_m3u8_file():
     login_3.click()
     time.sleep(5)
     
-    url = "http://elearning.zikao365.com/xcware/video/h5video/videoPlay.shtm?cwareID=514286&videoID="
+    url = "http://elearning.zikao365.com/xcware/video/h5video/videoPlay.shtm?cwareID=514284&videoID="
     browser.get(url+"101")
         
     #章节                                      //*[@id="app"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul

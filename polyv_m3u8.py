@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #coding=utf8
  
-import os, sys
+import os
 import hashlib, binascii
 import re, json, base64
 import requests
