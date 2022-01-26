@@ -1,0 +1,1 @@
+pyinstaller -i icon.ico spider_gui.py -p polyv_m3u8.py -p spider_1.py -p browsermob-proxy-2.1.4
