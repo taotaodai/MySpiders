@@ -263,6 +263,5 @@ def hash_md5(_str) :
     _hash.update(_str.encode('utf-8'))
     return _hash.hexdigest()
 
-#
-# start("17820020047","Zk123456","31-00199",url= "http://wx.zikaojihui.com/",zhang=1)
+start("17820020047","Zk123456","20430",url= "http://kc.zikao35.com/",zhang=1)
 

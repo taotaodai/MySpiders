@@ -28,27 +28,31 @@ def get_m3u8_file():
     browser = webdriver.Chrome(chrome_options=chrome_options)
     
     browser.get("https://www.zikao365.com/")
-    
-    login_1 = browser.find_element_by_xpath("/html/body/div/div[3]/div[1]/div[1]/div[1]/div[2]/a[1]")
+    #/html/body/div[2]/div[1]/div/div[1]/ul[1]/li[3]
+    login_1 = browser.find_element_by_xpath("/html/body/div[2]/div[1]/div/div[1]/ul[1]/li[3]")
     login_1.click()
     time.sleep(2)
-    
-    browser.switch_to_frame("frameTencent")
+
+    browser.switch_to.frame("frameTencent")
     
     login_2 = browser.find_element_by_xpath("/html/body/div[1]/div/div[1]/ul/li[3]")
     login_2.click()
     time.sleep(1)
-    
+
+    # Zk123456
+    # abcd123520
+    # 17820020047
+    # 13326974963
     username = browser.find_element_by_xpath("//*[@id=\"username\"]")
-    username.send_keys("17818555103")
+    username.send_keys("17820020047")
     password = browser.find_element_by_xpath("//*[@id=\"password\"]")
-    password.send_keys("Abcd123520")
+    password.send_keys("abcd123520")
     
     login_3 = browser.find_element_by_xpath("//*[@id=\"submit_log_btn\"]")
     login_3.click()
     time.sleep(5)
     
-    url = "http://elearning.zikao365.com/xcware/video/h5video/videoPlay.shtm?cwareID=514284&videoID="
+    url = "http://elearning.zikao365.com/xcware/video/h5video/videoPlay.shtm?cwareID=513844&videoID="
     browser.get(url+"101")
         
     #章节                                      //*[@id="app"]/div/div[2]/div[1]/div[1]/div[3]/div[2]/div[1]/div/div/div[1]/div/ul
@@ -57,8 +61,9 @@ def get_m3u8_file():
     current_section_index = 1
     total = 0
     while(has_next_section):
+        id = "4" + str(current_section_index)
         try:
-            browser.get(url+str(current_section_index)+"01")
+            browser.get(url + id + "01")
             time.sleep(2)
             print("点击第"+str(current_section_index)+"章")
                                                     #//*[@id="catalog"]/div[2]/div/div[1]/a[1]
@@ -78,16 +83,16 @@ def get_m3u8_file():
             #//*[@id="301"]/span[2]
             #//*[@id="801"]/span[2]
             video_index = "00"
-            
+
             if(current_jie_index >= 10):
                 video_index = str(current_jie_index)
             else:
                 video_index = "0"+str(current_jie_index)
                 
-            browser.get(url+str(current_section_index) + video_index)
+            browser.get(url + id + video_index)
             time.sleep(2)
             try:
-                jie = browser.find_element_by_xpath("//*[@id=\""+str(current_section_index)+ video_index + "\"]/span[2]")               
+                jie = browser.find_element_by_xpath("//*[@id=\""+id+ video_index + "\"]/span[2]")
                 jie_name = jie.get_attribute("title")
                 
                 print("获取第"+str(current_section_index)+"章，第"+str(current_jie_index)+"讲")
@@ -96,7 +101,7 @@ def get_m3u8_file():
                 total += 1
                 
             except Exception as e:
-                print("一层报错："+str(e))
+                print("二层报错："+str(e))
                 has_next_jie = False
                 current_section_index += 1                
 
